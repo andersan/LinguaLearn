@@ -116,7 +116,7 @@ What began as a translation tool has now evolved to include surprisingly effecti
     -   If you cannot find the above options in `Privacy & Security`, or get error prompts such as broken files with Apple Silicon machines. Open `Terminal.app` and enter the following command (you may need to enter a password halfway through), then restart `LinguaLearn`:
 
         ```sh
-        sudo xattr -d com.apple.quarantine /Applications/OpenAI\ Translator.app
+        sudo xattr -d com.apple.quarantine /Applications/LinguaLearn.app
         ```
 
 -   If you encounter a permission prompt every time you open it, or if you cannot perform a shortcut translation, please go to `Settings` -> `Privacy & Security` -> `Supporting Features` to remove LinguaLearn, and then re-add LinguaLearn.

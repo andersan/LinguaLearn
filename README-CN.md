@@ -114,7 +114,7 @@
     -   如果在 `隐私与安全性` 中找不到以上选项，或启动时提示文件损坏（Apple Silicon版本）。打开 `Terminal.app`，并输入以下命令（中途可能需要输入密码），然后重启 `LinguaLearn` 即可：
 
         ```sh
-        sudo xattr -d com.apple.quarantine /Applications/OpenAI\ Translator.app
+        sudo xattr -d com.apple.quarantine /Applications/LinguaLearn.app
         ```
 
 -   如果您每次打开它都遇到权限提示，或者无法执行快捷键划词翻译，请前往 `设置` -> `隐私与安全性` -> `辅助功能` 中删除 LinguaLearn，然后重新添加 LinguaLearn:
