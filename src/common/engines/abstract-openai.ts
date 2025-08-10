@@ -108,7 +108,9 @@ export abstract class AbstractOpenAI extends AbstractEngine {
         const headers = await this.getHeaders()
         const isChatAPI = await this.isChatAPI()
         const body = await this.getBaseRequestBody()
-        if (!isChatAPI) {
+        if (req.messages && req.messages.length > 0 && isChatAPI) {
+            body['messages'] = req.messages
+        } else if (!isChatAPI) {
             // Azure OpenAI Service supports multiple API.
             // We should check if the settings.apiURLPath is match `/deployments/{deployment-id}/chat/completions`.
             // If not, we should use the legacy parameters.

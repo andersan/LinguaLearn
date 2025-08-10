@@ -1,6 +1,9 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useRef } from 'react'
 import { chatService } from '../internal-services/chat'
 import { useLiveQuery } from 'dexie-react-hooks'
+import { useSettings } from '../hooks/useSettings'
+import { getEngine } from '../engines'
+import type { IMessage } from '../engines/interfaces'
 
 interface ChatPanelProps {
     sessionId?: string
@@ -10,19 +13,56 @@ interface ChatPanelProps {
 export const ChatPanel: React.FC<ChatPanelProps> = ({ sessionId, onSessionCreate }) => {
     const messages = useLiveQuery(async () => (sessionId ? await chatService.listMessages(sessionId) : []), [sessionId])
     const [input, setInput] = useState('')
+    const { settings } = useSettings()
+    const [isStreaming, setIsStreaming] = useState(false)
+    const abortRef = useRef<AbortController | null>(null)
 
     const handleSend = useCallback(async () => {
-        if (!input.trim()) return
+        if (!input.trim() || !settings) return
         let sid = sessionId
         if (!sid) {
             sid = await chatService.createSession({})
             onSessionCreate?.(sid)
         }
-        await chatService.addMessage(sid!, 'user', input)
-        // Placeholder assistant echo until engine integration
-        await chatService.addMessage(sid!, 'assistant', '(model response placeholder)')
+        const userContent = input
         setInput('')
-    }, [input, sessionId, onSessionCreate])
+        const userId = await chatService.addMessage(sid!, 'user', userContent)
+        void userId // reserved
+        const assistantId = await chatService.addMessage(sid!, 'assistant', '')
+        const engine = getEngine(settings.provider)
+        const controller = new AbortController()
+        abortRef.current = controller
+        setIsStreaming(true)
+        const history = (await chatService.listMessages(sid!)).map((m) => ({
+            role: m.role,
+            content: m.content,
+        })) as IMessage[]
+        try {
+            await engine.sendMessage({
+                rolePrompt: '',
+                commandPrompt: '',
+                messages: history,
+                signal: controller.signal,
+                onMessage: async (msg) => {
+                    if (!msg.content) return
+                    await chatService.updateMessageContent(
+                        assistantId,
+                        (messages?.find((m) => m.id === assistantId)?.content || '') + msg.content
+                    )
+                },
+                onFinished: () => {
+                    setIsStreaming(false)
+                },
+                onError: (err) => {
+                    chatService.updateMessageContent(assistantId, `Error: ${err}`)
+                    setIsStreaming(false)
+                },
+            })
+        } catch (e) {
+            chatService.updateMessageContent(assistantId, `Error: ${(e as Error).message}`)
+            setIsStreaming(false)
+        }
+    }, [input, sessionId, onSessionCreate, settings, messages])
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -44,9 +84,19 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ sessionId, onSessionCreate
                     disabled={false}
                     placeholder='Type to chat...'
                 />
-                <button disabled={!input.trim()} onClick={handleSend}>
+                <button disabled={!input.trim() || isStreaming} onClick={handleSend}>
                     Send
                 </button>
+                {isStreaming && (
+                    <button
+                        onClick={() => {
+                            abortRef.current?.abort()
+                            setIsStreaming(false)
+                        }}
+                    >
+                        Stop
+                    </button>
+                )}
             </div>
         </div>
     )
