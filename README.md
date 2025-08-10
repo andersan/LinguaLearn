@@ -11,7 +11,7 @@
 
 <p align="center">
   <a href="LICENSE" target="_blank">
-    <img alt="MIT License" src="https://img.shields.io/github/license/yetone/openai-translator.svg?style=flat-square" />
+    <img alt="MIT License" src="https://img.shields.io/github/license/yetone/lingualearn.svg?style=flat-square" />
   </a>
 
   <!-- TypeScript Badge -->
@@ -20,30 +20,30 @@
   <!-- Rust Badge -->
   <img alt="Rust" src="https://img.shields.io/badge/-Rust-orange?style=flat-square&logo=rust&logoColor=white" />
 
-  <a href="https://chrome.google.com/webstore/detail/openai-translator/ogjibjphoadhljaoicdnjnmgokohngcc" target="_blank">
+  <a href="https://chrome.google.com/webstore/detail/lingualearn/ogjibjphoadhljaoicdnjnmgokohngcc" target="_blank">
     <img alt="Chrome" src="https://img.shields.io/chrome-web-store/stars/ogjibjphoadhljaoicdnjnmgokohngcc?color=blue&label=Chrome&style=flat-square&logo=google-chrome&logoColor=white" />
   </a>
 
-  <a href="https://addons.mozilla.org/en-US/firefox/addon/openai-translator/" target="_blank">
-    <img alt="Firefox" src="https://img.shields.io/amo/stars/openai-translator?color=orange&label=Firefox&style=flat-square&logo=firefox&logoColor=white" />
+  <a href="https://addons.mozilla.org/en-US/firefox/addon/lingualearn/" target="_blank">
+    <img alt="Firefox" src="https://img.shields.io/amo/stars/lingualearn?color=orange&label=Firefox&style=flat-square&logo=firefox&logoColor=white" />
   </a>
 
-  <a href="https://github.com/yetone/openai-translator/releases" target="_blank">
+  <a href="https://github.com/andersan/lingualearn/releases" target="_blank">
     <img alt="macOS" src="https://img.shields.io/badge/-macOS-black?style=flat-square&logo=apple&logoColor=white" />
   </a>
 
-  <a href="https://github.com/yetone/openai-translator/releases" target="_blank">
+  <a href="https://github.com/andersan/lingualearn/releases" target="_blank">
     <img alt="Windows" src="https://img.shields.io/badge/-Windows-blue?style=flat-square&logo=windows&logoColor=white" />
   </a>
 
-  <a href="https://github.com/yetone/openai-translator/releases" target="_blank">
+  <a href="https://github.com/andersan/lingualearn/releases" target="_blank">
     <img alt="Linux" src="https://img.shields.io/badge/-Linux-yellow?style=flat-square&logo=linux&logoColor=white" />
   </a>
 </p>
 
 # Why Yet another Translator
 
-I have developed a [Bob](https://bobtranslate.com/) [plugin](https://github.com/yetone/bob-plugin-openai-translator) that utilizes ChatGPT API to provide global word translation on macOS. However, since not all users have access to macOS to benefit from the plugin, I have created this project!
+I have developed a [Bob](https://bobtranslate.com/) [plugin](https://github.com/yetone/bob-plugin-lingualearn) that utilizes ChatGPT API to provide global word translation on macOS. However, since not all users have access to macOS to benefit from the plugin, I have created this project!
 
 # More than just a browser extension
 
@@ -87,7 +87,7 @@ What began as a translation tool has now evolved to include surprisingly effecti
 
 ### Install Manually
 
-1. Download the installation package ending in `.exe` from the [Latest Release](https://github.com/yetone/openai-translator/releases/latest) page.
+1. Download the installation package ending in `.exe` from the [Latest Release](https://github.com/andersan/lingualearn/releases/latest) page.
 2. Double click the downloaded file to install it.
 3. If prompted as unsafe, you can click on `More Info` -> `Run Anyway` to proceed with the installation.
 4. Ready to use!
@@ -96,7 +96,7 @@ What began as a translation tool has now evolved to include surprisingly effecti
 
 ### Install Manually
 
-1. Go to the [Latest Release](https://github.com/yetone/openai-translator/releases/latest) page and download the corresponding chip's `.dmg` installation package. Note: Use aarch64 version for Apple Silicon machines and run `xattr` command below.
+1. Go to the [Latest Release](https://github.com/andersan/lingualearn/releases/latest) page and download the corresponding chip's `.dmg` installation package. Note: Use aarch64 version for Apple Silicon machines and run `xattr` command below.
 2. Double click the downloaded file to install it.
 3. Ready to use!
 
@@ -139,11 +139,11 @@ For details, see [Desktop Clip Extension](./CLIP-EXTENSIONS.md)
 1. Visit your Browser Extension Store to install this plugin:
 
    <p align="center">
-     <a target="_blank" href="https://chrome.google.com/webstore/detail/openai-translator/ogjibjphoadhljaoicdnjnmgokohngcc">
+     <a target="_blank" href="https://chrome.google.com/webstore/detail/lingualearn/ogjibjphoadhljaoicdnjnmgokohngcc">
        <img src="https://img.shields.io/chrome-web-store/v/ogjibjphoadhljaoicdnjnmgokohngcc?label=Chrome%20Web%20Store&style=for-the-badge&color=blue&logo=google-chrome&logoColor=white" />
      </a>
-     <a target="_blank" href="https://addons.mozilla.org/en-US/firefox/addon/openai-translator/">
-       <img src="https://img.shields.io/amo/v/openai-translator?label=Firefox%20Add-on&style=for-the-badge&color=orange&logo=firefox&logoColor=white" />
+     <a target="_blank" href="https://addons.mozilla.org/en-US/firefox/addon/lingualearn/">
+       <img src="https://img.shields.io/amo/v/lingualearn?label=Firefox%20Add-on&style=for-the-badge&color=orange&logo=firefox&logoColor=white" />
      </a>
    </p>
 
@@ -173,10 +173,10 @@ const API_URL_PATH = `/openai/deployments/${deployName}/chat/completions?api-ver
 # Star History
 
 <p align="center">
-  <a target="_blank" href="https://star-history.com/#yetone/openai-translator&Date">
+  <a target="_blank" href="https://star-history.com/#yetone/lingualearn&Date">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=yetone/openai-translator&type=Date&theme=dark">
-      <img alt="NebulaGraph Data Intelligence Suite(ngdi)" src="https://api.star-history.com/svg?repos=yetone/openai-translator&type=Date">
+      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=yetone/lingualearn&type=Date&theme=dark">
+      <img alt="NebulaGraph Data Intelligence Suite(ngdi)" src="https://api.star-history.com/svg?repos=yetone/lingualearn&type=Date">
     </picture>
   </a>
 </p>

@@ -16,8 +16,8 @@
 [PopClip](https://pilotmoon.com/popclip/) 是 macOS 上成熟的划词软件，它提供了完善的插件机制，我们提供了它的插件，安装步骤如下：
 
 * 1. 下载并安装 [PopClip](https://pilotmoon.com/popclip/)
-* 2. 下载 [openai-translator.popclipextz](https://github.com/openai-translator/openai-translator/releases/latest/download/openai-translator.popclipextz)
-* 3. 双击下载完毕的 openai-translator.popclipextz，点击弹出窗口中的 Install "LinguaLearn" 按钮即可安装完毕
+* 2. 下载 [lingualearn.popclipextz](https://github.com/andersan/lingualearn/releases/latest/download/lingualearn.popclipextz)
+* 3. 双击下载完毕的 lingualearn.popclipextz，点击弹出窗口中的 Install "LinguaLearn" 按钮即可安装完毕
     
     <p align="center">
         <img width="400" src="https://user-images.githubusercontent.com/1206493/240260692-8af6141a-3dba-4775-921d-505223addf9e.png" />
@@ -40,18 +40,18 @@
 ## SnipDo
 
 * 1. 下载并安装 [SnipDo](https://apps.microsoft.com/store/detail/snipdo/9NPZ2TVKJVT7)
-* 2. 下载 [openai-translator.pbar](https://github.com/openai-translator/openai-translator/releases/latest/download/openai-translator.pbar)
-* 3. 双击下载完毕的 openai-translator.pbar 即可安装
+* 2. 下载 [lingualearn.pbar](https://github.com/andersan/lingualearn/releases/latest/download/lingualearn.pbar)
+* 3. 双击下载完毕的 lingualearn.pbar 即可安装
 * 4. 在 SnipDo 的设置页面中启用 LinguaLearn
 
     <p align="center">
-        <img width="200" src="https://github.com/openai-translator/openai-translator/assets/1206493/09d66943-06db-4ba7-b217-a434c33cc8aa" />
+        <img width="200" src="https://github.com/andersan/lingualearn/assets/1206493/09d66943-06db-4ba7-b217-a434c33cc8aa" />
     </p>
 
     建议只保留 LinguaLearn:
   
     <p align="center">    
-        <img width="600" src="https://github.com/openai-translator/openai-translator/assets/1206493/76b619d9-e63d-4d67-a32c-a0d2d6923558" />
+        <img width="600" src="https://github.com/andersan/lingualearn/assets/1206493/76b619d9-e63d-4d67-a32c-a0d2d6923558" />
     </p>
 
 

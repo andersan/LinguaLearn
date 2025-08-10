@@ -16,8 +16,8 @@ Usually the clipboard is used to get the selected text, but this can cause bugs 
 [PopClip](https://pilotmoon.com/popclip/) is a well-established clip word software on macOS, it provides a perfect plug-in mechanism, we provide its plug-in, the installation steps are as follows:
 
 * 1. Download and install [PopClip](https://pilotmoon.com/popclip/)
-* 2. Download [openai-translator.popclipextz](https://github.com/openai-translator/openai-translator/releases/latest/download/openai-translator.popclipextz)
-* 3. Double-click the downloaded openai-translator.popclipextz and click the Install "LinguaLearn" button in the popup window to finish the installation
+* 2. Download [lingualearn.popclipextz](https://github.com/andersan/lingualearn/releases/latest/download/lingualearn.popclipextz)
+* 3. Double-click the downloaded lingualearn.popclipextz and click the Install "LinguaLearn" button in the popup window to finish the installation
     
     <p align="center">
         <img width="400" src="https://user-images.githubusercontent.com/1206493/240260692-8af6141a-3dba-4775-921d-505223addf9e.png" />
@@ -40,17 +40,17 @@ Usually the clipboard is used to get the selected text, but this can cause bugs 
 ## SnipDo
 
 * 1. Download and install [SnipDo](https://apps.microsoft.com/store/detail/snipdo/9NPZ2TVKJVT7)
-* 2. Download [openai-translator.pbar](https://github.com/openai-translator/openai-translator/releases/latest/download/openai-translator.pbar)
-* 3. Double-click the downloaded openai-translator.pbar to install it
+* 2. Download [lingualearn.pbar](https://github.com/andersan/lingualearn/releases/latest/download/lingualearn.pbar)
+* 3. Double-click the downloaded lingualearn.pbar to install it
 * 4. Enable LinguaLearn in SnipDo's settings page
     <p align="center">
-        <img width="200" src="https://github.com/openai-translator/openai-translator/assets/1206493/09d66943-06db-4ba7-b217-a434c33cc8aa" />
+        <img width="200" src="https://github.com/andersan/lingualearn/assets/1206493/09d66943-06db-4ba7-b217-a434c33cc8aa" />
     </p>
 
     Suggest to only keep LinguaLearn:
   
     <p align="center">    
-        <img width="600" src="https://github.com/openai-translator/openai-translator/assets/1206493/76b619d9-e63d-4d67-a32c-a0d2d6923558" />
+        <img width="600" src="https://github.com/andersan/lingualearn/assets/1206493/76b619d9-e63d-4d67-a32c-a0d2d6923558" />
     </p>
     
 * 5. The effect is as follows

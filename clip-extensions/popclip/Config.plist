@@ -6,7 +6,7 @@
         <array>
             <dict>
                 <key>Shell Script File</key>
-                <string>openai-translator.sh</string>
+                <string>lingualearn.sh</string>
                 <key>Image File</key>
                 <string>icon.png</string>
                 <key>Title</key>
@@ -17,7 +17,7 @@
         <array>
             <dict>
                 <key>Link</key>
-                <string>https://github.com/openai-translator/openai-translator</string>
+                <string>https://github.com/andersan/lingualearn</string>
                 <key>Name</key>
                 <string>LinguaLearn</string>
             </dict>
@@ -25,9 +25,9 @@
         <key>Extension Description</key>
         <string>Translate text with LinguaLearn.</string>
         <key>Extension Identifier</key>
-        <string>xyz.yetone.apps.openai-translator.clip-extensions.popclip</string>
+        <string>xyz.yetone.apps.lingualearn.clip-extensions.popclip</string>
         <key>Extension Image File</key>
-        <string>openai-translator.png</string>
+        <string>lingualearn.png</string>
         <key>Extension Name</key>
         <string>LinguaLearn</string>
         <key>Required OS Version</key>

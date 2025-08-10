@@ -11,7 +11,7 @@
 
 <p align="center">
   <a href="LICENSE" target="_blank">
-    <img alt="MIT License" src="https://img.shields.io/github/license/yetone/openai-translator.svg?style=flat-square" />
+    <img alt="MIT License" src="https://img.shields.io/github/license/yetone/lingualearn.svg?style=flat-square" />
   </a>
 
   <!-- TypeScript Badge -->
@@ -20,23 +20,23 @@
   <!-- Rust Badge -->
   <img alt="Rust" src="https://img.shields.io/badge/-Rust-orange?style=flat-square&logo=rust&logoColor=white" />
 
-  <a href="https://chrome.google.com/webstore/detail/openai-translator/ogjibjphoadhljaoicdnjnmgokohngcc" target="_blank">
+  <a href="https://chrome.google.com/webstore/detail/lingualearn/ogjibjphoadhljaoicdnjnmgokohngcc" target="_blank">
     <img alt="Chrome" src="https://img.shields.io/chrome-web-store/stars/ogjibjphoadhljaoicdnjnmgokohngcc?color=blue&label=Chrome&style=flat-square&logo=google-chrome&logoColor=white" />
   </a>
 
-  <a href="https://addons.mozilla.org/en-US/firefox/addon/openai-translator/" target="_blank">
-    <img alt="Firefox" src="https://img.shields.io/amo/stars/openai-translator?color=orange&label=Firefox&style=flat-square&logo=firefox&logoColor=white" />
+  <a href="https://addons.mozilla.org/en-US/firefox/addon/lingualearn/" target="_blank">
+    <img alt="Firefox" src="https://img.shields.io/amo/stars/lingualearn?color=orange&label=Firefox&style=flat-square&logo=firefox&logoColor=white" />
   </a>
 
-  <a href="https://github.com/yetone/openai-translator/releases" target="_blank">
+  <a href="https://github.com/andersan/lingualearn/releases" target="_blank">
     <img alt="macOS" src="https://img.shields.io/badge/-macOS-black?style=flat-square&logo=apple&logoColor=white" />
   </a>
 
-  <a href="https://github.com/yetone/openai-translator/releases" target="_blank">
+  <a href="https://github.com/andersan/lingualearn/releases" target="_blank">
     <img alt="Windows" src="https://img.shields.io/badge/-Windows-blue?style=flat-square&logo=windows&logoColor=white" />
   </a>
 
-  <a href="https://github.com/yetone/openai-translator/releases" target="_blank">
+  <a href="https://github.com/andersan/lingualearn/releases" target="_blank">
     <img alt="Linux" src="https://img.shields.io/badge/-Linux-yellow?style=flat-square&logo=linux&logoColor=white" />
   </a>
 
@@ -44,7 +44,7 @@
 
 # 为啥要造这个轮子？
 
-我开发了一个 Bob 的插件 [bob-plugin-openai-translator](https://github.com/yetone/bob-plugin-openai-translator) 使用 ChatGPT API 在 macOS 上进行全局划词翻译。
+我开发了一个 Bob 的插件 [bob-plugin-lingualearn](https://github.com/yetone/bob-plugin-lingualearn) 使用 ChatGPT API 在 macOS 上进行全局划词翻译。
 
 但是由于很多用户并不是 macOS 用户，所以特此开发了一个浏览器插件方便非 macOS 用户使用 ChatGPT 进行划词翻译。
 
@@ -84,7 +84,7 @@
 
 ### 手动安装
 
-1. 在 [Latest Release](https://github.com/yetone/openai-translator/releases/latest) 页面下载以 `.exe` 结尾的安装包
+1. 在 [Latest Release](https://github.com/andersan/lingualearn/releases/latest) 页面下载以 `.exe` 结尾的安装包
 2. 下载完成后双击安装包进行安装
 3. 如果提示不安全，可以点击 `更多信息` -> `仍要运行` 进行安装
 4. 开始使用吧！
@@ -93,7 +93,7 @@
 
 ### 手动安装
 
-1.  去 [Latest Release](https://github.com/yetone/openai-translator/releases/latest) 页面下载对应芯片以 `.dmg` 的安装包（Apple Silicon机器请使用aarch64版本，并注意执行下文`xattr`指令）
+1.  去 [Latest Release](https://github.com/andersan/lingualearn/releases/latest) 页面下载对应芯片以 `.dmg` 的安装包（Apple Silicon机器请使用aarch64版本，并注意执行下文`xattr`指令）
 2.  下载完成后双击安装包进行安装，然后将 `LinguaLearn` 拖动到 `Applications` 文件夹。
 3.  开始使用吧！
 
@@ -137,11 +137,11 @@
 1. 访问你使用的浏览器的插件市场安装此插件：
 
    <p align="center">
-     <a target="_blank" href="https://chrome.google.com/webstore/detail/openai-translator/ogjibjphoadhljaoicdnjnmgokohngcc">
+     <a target="_blank" href="https://chrome.google.com/webstore/detail/lingualearn/ogjibjphoadhljaoicdnjnmgokohngcc">
        <img src="https://img.shields.io/chrome-web-store/v/ogjibjphoadhljaoicdnjnmgokohngcc?label=Chrome%20Web%20Store&style=for-the-badge&color=blue&logo=google-chrome&logoColor=white" />
      </a>
-     <a target="_blank" href="https://addons.mozilla.org/en-US/firefox/addon/openai-translator/">
-       <img src="https://img.shields.io/amo/v/openai-translator?label=Firefox%20Add-on&style=for-the-badge&color=orange&logo=firefox&logoColor=white" />
+     <a target="_blank" href="https://addons.mozilla.org/en-US/firefox/addon/lingualearn/">
+       <img src="https://img.shields.io/amo/v/lingualearn?label=Firefox%20Add-on&style=for-the-badge&color=orange&logo=firefox&logoColor=white" />
      </a>
    </p>
 
@@ -171,10 +171,10 @@ const API_URL_PATH = `/openai/deployments/${deployName}/chat/completions?api-ver
 # Star 历史
 
 <p align="center">
-  <a target="_blank" href="https://star-history.com/#yetone/openai-translator&Date">
+  <a target="_blank" href="https://star-history.com/#yetone/lingualearn&Date">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=yetone/openai-translator&type=Date&theme=dark">
-      <img alt="NebulaGraph Data Intelligence Suite(ngdi)" src="https://api.star-history.com/svg?repos=yetone/openai-translator&type=Date">
+      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=yetone/lingualearn&type=Date&theme=dark">
+      <img alt="NebulaGraph Data Intelligence Suite(ngdi)" src="https://api.star-history.com/svg?repos=yetone/lingualearn&type=Date">
     </picture>
   </a>
 </p>
