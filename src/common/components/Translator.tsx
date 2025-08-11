@@ -10,7 +10,7 @@ import { AiOutlineFileSync } from 'react-icons/ai'
 import { IoSettingsOutline } from 'react-icons/io5'
 import { TiArrowBack } from 'react-icons/ti'
 import { TbArrowsExchange, TbCsv } from 'react-icons/tb'
-import { MdOutlineGrade, MdGrade } from 'react-icons/md'
+import { MdOutlineGrade, MdGrade, MdChat } from 'react-icons/md'
 import * as mdIcons from 'react-icons/md'
 import { StatefulTooltip } from 'baseui-sd/tooltip'
 import { detectLang, getLangConfig, sourceLanguages, targetLanguages, LangCode } from '../lang'
@@ -62,6 +62,7 @@ import { GrMoreVertical } from 'react-icons/gr'
 import { StatefulPopover } from 'baseui-sd/popover'
 import { StatefulMenu } from 'baseui-sd/menu'
 import { IconType } from 'react-icons'
+import { ChatPanel } from './ChatPanel'
 import { GiPlatform } from 'react-icons/gi'
 import { IoIosRocket } from 'react-icons/io'
 import 'katex/dist/katex.min.css'
@@ -1026,6 +1027,9 @@ function InnerTranslator(props: IInnerTranslatorProps) {
     }, [showSettings])
 
     const [isNotLogin, setIsNotLogin] = useState(false)
+    // Chat integration state
+    const [chatSessionId, setChatSessionId] = useState<string | undefined>(undefined)
+    const [showChat, setShowChat] = useState(false)
 
     /**
      * Add or remove word from collection.
@@ -1795,7 +1799,7 @@ function InnerTranslator(props: IInnerTranslatorProps) {
                                                         ),
                                                     }
                                                 }),
-                                                { divider: true },
+                                                { id: '__divider__', divider: true },
                                                 {
                                                     id: '__manager__',
                                                     label: (
@@ -1915,7 +1919,10 @@ function InnerTranslator(props: IInnerTranslatorProps) {
                                                 Input: {
                                                     style: {
                                                         fontSize: `${settings.fontSize}px !important`,
-                                                        padding: '4px 8px',
+                                                        paddingTop: '4px',
+                                                        paddingRight: '8px',
+                                                        paddingBottom: '4px',
+                                                        paddingLeft: '8px',
                                                         color:
                                                             themeType === 'dark'
                                                                 ? theme.colors.contentSecondary
@@ -1988,7 +1995,10 @@ function InnerTranslator(props: IInnerTranslatorProps) {
                                                             style: {
                                                                 fontWeight: 'normal',
                                                                 fontSize: '12px',
-                                                                padding: '4px 8px',
+                                                                paddingTop: '4px',
+                                                                paddingRight: '8px',
+                                                                paddingBottom: '4px',
+                                                                paddingLeft: '8px',
                                                             },
                                                         },
                                                     }}
@@ -2259,6 +2269,18 @@ function InnerTranslator(props: IInnerTranslatorProps) {
                                         {translatedText && (
                                             <div ref={actionButtonsRef} className={styles.actionButtonsContainer}>
                                                 <div style={{ marginRight: 'auto' }} />
+                                                {!showChat && (
+                                                    <Tooltip content={t('Continue Chat')} placement='bottom'>
+                                                        <div
+                                                            className={styles.actionButton}
+                                                            onClick={() => {
+                                                                setShowChat(true)
+                                                            }}
+                                                        >
+                                                            <MdChat size={15} />
+                                                        </div>
+                                                    </Tooltip>
+                                                )}
                                                 {!isLoading && (
                                                     <Tooltip content={t('Retry')} placement='bottom'>
                                                         <div
@@ -2570,6 +2592,11 @@ function InnerTranslator(props: IInnerTranslatorProps) {
                 </ModalBody>
             </Modal>
             <Toaster />
+            {showChat && (
+                <div style={{ marginTop: 16 }}>
+                    <ChatPanel sessionId={chatSessionId} onSessionCreate={(id) => setChatSessionId(id)} />
+                </div>
+            )}
         </div>
     )
 }
