@@ -1799,7 +1799,7 @@ function InnerTranslator(props: IInnerTranslatorProps) {
                                                         ),
                                                     }
                                                 }),
-                                                { divider: true },
+                                                { id: '__divider__', divider: true },
                                                 {
                                                     id: '__manager__',
                                                     label: (
@@ -1919,7 +1919,10 @@ function InnerTranslator(props: IInnerTranslatorProps) {
                                                 Input: {
                                                     style: {
                                                         fontSize: `${settings.fontSize}px !important`,
-                                                        padding: '4px 8px',
+                                                        paddingTop: '4px',
+                                                        paddingRight: '8px',
+                                                        paddingBottom: '4px',
+                                                        paddingLeft: '8px',
                                                         color:
                                                             themeType === 'dark'
                                                                 ? theme.colors.contentSecondary
@@ -1992,7 +1995,10 @@ function InnerTranslator(props: IInnerTranslatorProps) {
                                                             style: {
                                                                 fontWeight: 'normal',
                                                                 fontSize: '12px',
-                                                                padding: '4px 8px',
+                                                                paddingTop: '4px',
+                                                                paddingRight: '8px',
+                                                                paddingBottom: '4px',
+                                                                paddingLeft: '8px',
                                                             },
                                                         },
                                                     }}

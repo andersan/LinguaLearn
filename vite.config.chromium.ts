@@ -18,6 +18,9 @@ export default defineConfig({
             useDynamicUrlWebAccessibleResources: false,
         }),
     ],
+    optimizeDeps: {
+        include: ['prop-types'],
+    },
     resolve: {
         alias: [{ find: '@', replacement: fileURLToPath(new URL('./src', import.meta.url)) }],
     },
@@ -25,6 +28,9 @@ export default defineConfig({
         minify: !isDev,
         sourcemap: isDev,
         target: 'chrome105',
+        commonjsOptions: {
+            transformMixedEsModules: true,
+        },
         rollupOptions: {
             output: {
                 dir: 'dist/browser-extension/chromium',
