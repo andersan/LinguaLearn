@@ -120,6 +120,8 @@ const useStyles = createUseStyles({
     'popupCard': {
         height: '100%',
         boxSizing: 'border-box',
+        display: 'flex',
+        flexDirection: 'column',
     },
     'footer': (props: IThemedStyleProps) => ({
         boxSizing: 'border-box',
@@ -1638,7 +1640,7 @@ function InnerTranslator(props: IInnerTranslatorProps) {
             )}
             <div
                 style={{
-                    display: !showSettings ? 'flex' : 'none',
+                    display: !showSettings ? 'block' : 'none',
                 }}
             >
                 <div style={props.containerStyle}>
@@ -2540,7 +2542,7 @@ function InnerTranslator(props: IInnerTranslatorProps) {
                                     >
                                         <IoSettingsOutline
                                             style={{
-                                                display: 'flex',
+                                                display: 'block',
                                             }}
                                             size={15}
                                         />
