@@ -78,6 +78,7 @@
     "katex": "^0.16.8",
     "lodash.debounce": "^4.0.8",
     "lru-cache": "^10.0.1",
+    "nanoid": "^4.0.0",
     "prism-react-renderer": "^2.3.0",
     "qs": "^6.11.2",
     "rc-field-form": "^1.36.0",

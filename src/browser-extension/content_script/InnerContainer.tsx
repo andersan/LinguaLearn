@@ -56,7 +56,8 @@ export default function InnerContainer({ children, reference }: Props) {
                     apply({ availableHeight, elements }) {
                         Object.assign(elements.floating.style, {
                             maxHeight: `${Math.max(popupCardMinHeightAfterTranslation, availableHeight)}px`,
-                            overflow: 'hidden',
+                            // Allow internal scrolling when content exceeds maxHeight
+                            overflow: 'auto',
                         })
                     },
                 }),

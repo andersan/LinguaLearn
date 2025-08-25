@@ -1,3 +1,18 @@
+# Ideas to differentiate this from the original project:
+
+1. Add a chat feature directly next to or instead of translation. Add this as an action next to translate, summarize, polish, etc.
+2. Add new features next to translate/summarize/polish which have more educational value. For example: "Grammar: Break down the grammar used in this text." Or "Synonyms: Rewrite this text with simpler language." Or "Pronunciation: Provide a phonetic transcription of this text." Or "Context: Explain the context in which this text might be used." Or "Correctness: Identify and correct any grammatical errors in this text, with an explanation of how or why they may be wrong."
+3. Incorporate gamification elements to enhance user engagement and motivation.
+4. Offer personalized learning paths based on user proficiency and goals.
+5. Integrate real-world scenarios and context-based learning for practical application.
+6. Add SRS (Spaced Repetition System) to optimize vocabulary retention, similar to Anki. Could even allow an export of cards to add to Anki.
+7. Review the logic used to determine which vocabulary were selected for translation and how to improve this process - users may select entire sentences in order to get better context and more accurate translations.
+8. Remove Mandarin prompt text, as I cannot understand it.
+
+-------
+
+# Original README
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/1651790/224081217-86521beb-1b69-4071-b195-f2ce0bb33db7.png">
   <img alt="NebulaGraph Data Intelligence Suite(ngdi)" src="https://user-images.githubusercontent.com/1651790/224081979-d3aa7867-94a6-4a85-a5d7-603e02360cee.png">
@@ -11,7 +26,7 @@
 
 <p align="center">
   <a href="LICENSE" target="_blank">
-    <img alt="MIT License" src="https://img.shields.io/github/license/yetone/lingualearn.svg?style=flat-square" />
+    <img alt="MIT License" src="https://img.shields.io/github/license/yetone/openai-translator.svg?style=flat-square" />
   </a>
 
   <!-- TypeScript Badge -->
@@ -173,10 +188,10 @@ const API_URL_PATH = `/openai/deployments/${deployName}/chat/completions?api-ver
 # Star History
 
 <p align="center">
-  <a target="_blank" href="https://star-history.com/#yetone/lingualearn&Date">
+  <a target="_blank" href="https://star-history.com/#yetone/openai-translator&Date">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=yetone/lingualearn&type=Date&theme=dark">
-      <img alt="NebulaGraph Data Intelligence Suite(ngdi)" src="https://api.star-history.com/svg?repos=yetone/lingualearn&type=Date">
+      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=yetone/openai-translator&type=Date&theme=dark">
+      <img alt="NebulaGraph Data Intelligence Suite(ngdi)" src="https://api.star-history.com/svg?repos=yetone/openai-translator&type=Date">
     </picture>
   </a>
 </p>
