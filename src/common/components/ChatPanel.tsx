@@ -87,6 +87,7 @@ const useStyles = createUseStyles({
         verticalAlign: 'middle',
     },
     inputRow: {
+        width: '100%',
         display: 'flex',
         flexDirection: 'row',
         gap: 6,
@@ -96,6 +97,7 @@ const useStyles = createUseStyles({
     },
     inputContainer: {
         flex: 1,
+        width: '100%',
     },
     inputHintBar: {
         display: 'flex',
@@ -136,6 +138,7 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ sessionId, onSessionCreate
     const [input, setInput] = useState('')
     const { settings } = useSettings()
     const [isStreaming, setIsStreaming] = useState(false)
+    const assistantContentRef = useRef('')
     const abortRef = useRef<AbortController | null>(null)
     const { theme } = useTheme()
 
@@ -159,6 +162,7 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ sessionId, onSessionCreate
         const userId = await chatService.addMessage(sid!, 'user', userContent)
         void userId // reserved
         const assistantId = await chatService.addMessage(sid!, 'assistant', '')
+        assistantContentRef.current = '' // Reset assistant content for new message
         const engine = getEngine(settings.provider)
         const controller = new AbortController()
         abortRef.current = controller
@@ -175,10 +179,8 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ sessionId, onSessionCreate
                 signal: controller.signal,
                 onMessage: async (msg) => {
                     if (!msg.content) return
-                    await chatService.updateMessageContent(
-                        assistantId,
-                        (messages?.find((m) => m.id === assistantId)?.content || '') + msg.content
-                    )
+                    assistantContentRef.current += msg.content
+                    chatService.updateMessageContent(assistantId, assistantContentRef.current)
                 },
                 onFinished: () => {
                     setIsStreaming(false)
@@ -192,7 +194,7 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ sessionId, onSessionCreate
             chatService.updateMessageContent(assistantId, `Error: ${(e as Error).message}`)
             setIsStreaming(false)
         }
-    }, [input, sessionId, onSessionCreate, settings, messages])
+    }, [input, sessionId, onSessionCreate, settings])
 
     const styles = useStyles({
         theme,
@@ -245,6 +247,7 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ sessionId, onSessionCreate
                         overrides={{
                             Root: {
                                 style: {
+                                    width: '100%',
                                     fontSize: settings ? `${settings.fontSize}px !important` : '13px',
                                     borderRadius: '4px',
                                     background: settings?.enableBackgroundBlur ? 'transparent !important' : undefined,

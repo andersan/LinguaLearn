@@ -1195,10 +1195,13 @@ function InnerTranslator(props: IInnerTranslatorProps) {
                                                 actionMode === 'translate' ? 'Translation' : actionMode || 'Action'
                                             }: ${text.slice(0, 24)}`,
                                             seedMessages: [
+                                                // TODO: remove this system message from the visible chat
                                                 {
                                                     role: 'system',
+                                                    // TODO: provide the user's chosen language as an input? or test this with the device in another language and using another language as a target (e.g. es->fr).
+                                                    // Don't want to default to english
                                                     content:
-                                                        'You are a helpful assistant continuing conversation about the just provided translation.',
+                                                        'You are a helpful assistant continuing conversation about the just provided translation. Use only the source and target language in your responses unless the user requests otherwise.',
                                                 },
                                                 {
                                                     role: 'user',
