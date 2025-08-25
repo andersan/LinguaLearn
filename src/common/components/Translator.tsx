@@ -124,10 +124,9 @@ const useStyles = createUseStyles({
     'footer': (props: IThemedStyleProps) => ({
         boxSizing: 'border-box',
         color: props.theme.colors.contentSecondary,
-        position: 'fixed',
         width: '100%',
         height: '42px',
-        left: '0',
+        order: 2,
         bottom: '0',
         paddingLeft: '6px',
         display: 'flex',
@@ -247,6 +246,10 @@ const useStyles = createUseStyles({
         paddingTop: props.isDesktopApp ? '52px' : undefined,
         display: 'flex',
         flexDirection: 'column',
+        flex: 1,
+        minHeight: 0,
+        // Remove scrolling here; chat panel will manage its own scroll
+        overflow: 'visible',
     }),
     'loadingContainer': {
         margin: '0 auto',
@@ -414,7 +417,7 @@ const useStyles = createUseStyles({
         'boxSizing': 'border-box',
         'overflow': 'auto',
         'paddingTop': isMacOS ? '82px !important' : '58px !important',
-        'paddingBottom': '42px',
+        // 'paddingBottom': '42px',
         'scrollbarWidth': 'none',
         '&::-webkit-scrollbar': {
             display: 'none',
@@ -1089,6 +1092,9 @@ function InnerTranslator(props: IInnerTranslatorProps) {
             if (!text || !sourceLang || !targetLang || !action) {
                 return
             }
+            // start a fresh chat session for this translation (will be created after translation succeeds)
+            // clear any existing session id so ChatPanel can reflect new session when shown
+            setChatSessionId(undefined)
             setShowWordbookButtons(false)
             const actionMode = action.mode
             const actionStrItem = actionMode
@@ -1176,6 +1182,41 @@ function InnerTranslator(props: IInnerTranslatorProps) {
                         setTranslatedText((translatedText) => {
                             const result = translatedText
                             cache.set(cachedKey, result)
+                            // create a dedicated chat session for this translation so user can continue chatting
+                            ;(async () => {
+                                try {
+                                    if (reason === 'stop' || reason === 'eos' || reason === 'end_turn') {
+                                        // only seed when translation finished normally
+                                        const { chatService } = await import('../internal-services/chat')
+                                        const sid = await chatService.createSession({
+                                            title: `${
+                                                actionMode === 'translate' ? 'Translation' : actionMode || 'Action'
+                                            }: ${text.slice(0, 24)}`,
+                                            seedMessages: [
+                                                {
+                                                    role: 'system',
+                                                    content:
+                                                        'You are a helpful assistant continuing conversation about the just provided translation.',
+                                                },
+                                                {
+                                                    role: 'user',
+                                                    content: text,
+                                                    meta: { mode: actionMode, sourceLang, targetLang },
+                                                },
+                                                {
+                                                    role: 'assistant',
+                                                    content: result,
+                                                    meta: { mode: actionMode, sourceLang, targetLang },
+                                                },
+                                            ],
+                                        })
+                                        setChatSessionId(sid)
+                                    }
+                                } catch (e) {
+                                    // non-fatal
+                                    console.warn('Failed to seed chat session for translation', e)
+                                }
+                            })()
                             return result
                         })
                     },
@@ -1581,7 +1622,9 @@ function InnerTranslator(props: IInnerTranslatorProps) {
             style={{
                 minHeight: vocabularyType !== 'hide' ? '600px' : undefined,
                 background: isDesktopApp() ? 'transparent' : theme.colors.backgroundPrimary,
-                paddingBottom: showSettings || settings.enableBackgroundBlur ? '0px' : '42px',
+                // paddingBottom: showSettings || settings.enableBackgroundBlur ? '0px' : '42px',
+                // unsure why the above was needed
+                paddingBottom: '0px',
             }}
         >
             {showSettings && (
@@ -1595,7 +1638,7 @@ function InnerTranslator(props: IInnerTranslatorProps) {
             )}
             <div
                 style={{
-                    display: !showSettings ? 'block' : 'none',
+                    display: !showSettings ? 'flex' : 'none',
                 }}
             >
                 <div style={props.containerStyle}>
@@ -2497,7 +2540,7 @@ function InnerTranslator(props: IInnerTranslatorProps) {
                                     >
                                         <IoSettingsOutline
                                             style={{
-                                                display: 'block',
+                                                display: 'flex',
                                             }}
                                             size={15}
                                         />

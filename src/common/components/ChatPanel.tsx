@@ -28,13 +28,17 @@ const useStyles = createUseStyles({
     root: {
         display: 'flex',
         flexDirection: 'column',
-        gap: 8,
         padding: 8,
         boxSizing: 'border-box',
         width: '100%',
+        minHeight: 260,
+        maxHeight: 'min(60vh, 520px)',
+        overflow: 'hidden',
     },
     messagesWrapper: (p: IChatPanelStyleProps) => ({
-        maxHeight: 260,
+        flex: 1,
+        order: 0,
+        minHeight: 0,
         overflowY: 'auto',
         border: `1px solid ${p.theme.colors.borderOpaque}`,
         padding: '8px 10px',
@@ -45,6 +49,11 @@ const useStyles = createUseStyles({
             : p.theme.colors.backgroundSecondary,
         fontSize: p.settings ? `${p.settings.fontSize - 1}px` : '13px',
         lineHeight: 1.5,
+        display: 'flex',
+        flexDirection: 'column',
+        overflowX: 'hidden',
+        paddingBottom: 160, // extra space so input can scroll to top
+        gap: 8,
     }),
     messageItem: {
         'marginBottom': 10,
@@ -82,6 +91,8 @@ const useStyles = createUseStyles({
         flexDirection: 'row',
         gap: 6,
         alignItems: 'flex-end',
+        // no marginTop:auto so the input can scroll upward
+        marginTop: 8,
     },
     inputContainer: {
         flex: 1,
@@ -107,7 +118,7 @@ const useStyles = createUseStyles({
         'fontSize': '11px',
         'cursor': 'pointer',
         'background': 'transparent',
-        'border': `1px solid transparent`,
+        'border': '1px solid transparent',
         'padding': '4px 8px',
         'borderRadius': 4,
         '&:disabled': {
