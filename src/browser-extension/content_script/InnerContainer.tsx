@@ -16,6 +16,7 @@ import { createUseStyles } from 'react-jss'
 
 type Props = {
     reference: ReferenceElement
+    disablePositioning?: boolean
 } & PropsWithChildren
 
 const useStyles = createUseStyles({
@@ -33,9 +34,19 @@ const useStyles = createUseStyles({
         minHeight: `${popupCardMinHeight}px`,
         width: 'max-content',
     },
+    sidebarContainer: {
+        position: 'fixed !important',
+        top: '0 !important',
+        right: '0 !important',
+        width: '360px !important',
+        height: '100vh !important',
+        maxWidth: 'none !important',
+        borderRadius: '0 !important',
+        boxShadow: '0 0 20px rgba(0,0,0,0.3) !important',
+    },
 })
 
-export default function InnerContainer({ children, reference }: Props) {
+export default function InnerContainer({ children, reference, disablePositioning = false }: Props) {
     const styles = useStyles()
 
     const draggedRef = useRef(false)
@@ -43,7 +54,7 @@ export default function InnerContainer({ children, reference }: Props) {
     const [position, setPosition] = useState({ x: 0, y: 0 })
 
     const updatePosition = useCallback(async () => {
-        if (!draggableRef.current) {
+        if (!draggableRef.current || disablePositioning) {
             return
         }
         const { x, y } = await computePosition(reference, draggableRef.current, {
@@ -69,7 +80,7 @@ export default function InnerContainer({ children, reference }: Props) {
             left: `${Math.max(documentPadding, x)}px`,
             top: `${Math.max(documentPadding, y)}px`,
         })
-    }, [reference])
+    }, [reference, disablePositioning])
 
     function handleOnDrag(event: DraggableEvent, data: DraggableData) {
         draggedRef.current = true
@@ -96,12 +107,17 @@ export default function InnerContainer({ children, reference }: Props) {
     return (
         <Draggable
             nodeRef={draggableRef}
-            handle={dragRegionSelector}
+            handle={disablePositioning ? undefined : dragRegionSelector}
             bounds='html'
             position={position}
             onDrag={handleOnDrag}
+            disabled={disablePositioning}
         >
-            <div ref={draggableRef} className={styles.container} id={popupCardInnerContainerId}>
+            <div
+                ref={draggableRef}
+                className={`${styles.container} ${disablePositioning ? styles.sidebarContainer : ''}`}
+                id={popupCardInnerContainerId}
+            >
                 {children}
             </div>
         </Draggable>

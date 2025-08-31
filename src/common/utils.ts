@@ -297,6 +297,13 @@ export const isBrowserExtensionContentScript = () => {
     return window['__IS_OT_BROWSER_EXTENSION_CONTENT_SCRIPT__' as any] !== undefined
 }
 
+export const isBrowserExtensionPopup = () => {
+    if (typeof window === 'undefined') {
+        return false
+    }
+    return window.location.pathname.includes('/popup/') || window.location.href.includes('popup')
+}
+
 export const isDesktopApp = () => {
     return isElectron() || isTauri()
 }

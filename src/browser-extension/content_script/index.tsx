@@ -23,6 +23,14 @@ import { setExternalOriginalText } from '@/common/store'
 let root: Root | null = null
 const generateId = createGenerateId()
 const hidePopupThumbTimer: number | null = null
+let isSidebarMode = false
+
+async function toggleSidebarMode() {
+    isSidebarMode = !isSidebarMode
+
+    // Re-render with updated sidebar state
+    await showPopupCard({ getBoundingClientRect: () => new DOMRect(0, 0, 0, 0) }, '', false)
+}
 
 async function popupThumbClickHandler(event: UserEventType) {
     event.stopPropagation()
@@ -115,8 +123,14 @@ async function showPopupCard(reference: ReferenceElement, text: string, autoFocu
         <React.StrictMode>
             <GlobalSuspense>
                 <JSS jss={jss} generateId={generateId} classNamePrefix='__yetone-lingualearn-jss-'>
-                    <InnerContainer reference={reference}>
-                        <TitleBar pinned={settings.pinned} onClose={hidePopupCard} engine={engine} />
+                    <InnerContainer reference={reference} disablePositioning={isSidebarMode}>
+                        <TitleBar
+                            pinned={settings.pinned}
+                            isSidebarMode={isSidebarMode}
+                            onClose={hidePopupCard}
+                            onToggleSidebar={toggleSidebarMode}
+                            engine={engine}
+                        />
                         <Translator
                             engine={engine}
                             autoFocus={autoFocus}
