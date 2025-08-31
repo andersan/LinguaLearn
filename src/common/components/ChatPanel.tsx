@@ -52,8 +52,13 @@ const useStyles = createUseStyles({
         display: 'flex',
         flexDirection: 'column',
         overflowX: 'hidden',
-        paddingBottom: 160, // extra space so input can scroll to top
         gap: 8,
+        // TODO: is this needed? Was seeing a scrollbar flicker, not happening anymore
+        // Force scrollbar to always reserve space
+        // scrollbarGutter: 'stable',
+        // Alternative approach - add consistent padding to account for scrollbar
+        // paddingRight: '18px', // Reserve space for scrollbar
+        // marginRight: '-8px', // Compensate for extra padding
     }),
     messageItem: {
         'marginBottom': 10,
