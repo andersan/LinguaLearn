@@ -11,6 +11,7 @@ import { VscSplitHorizontal, VscLayoutSidebarLeft } from 'react-icons/vsc'
 import LogoWithText from '../../common/components/LogoWithText'
 import { setSettings } from '../../common/utils'
 import { Tooltip } from '../../common/components/Tooltip'
+import { useTranslatorStore } from '@/common/store'
 
 const useStyles = createUseStyles({
     container: ({ theme }: IThemedStyleProps) => ({
@@ -37,21 +38,15 @@ const useStyles = createUseStyles({
 
 type TitleBarProps = {
     pinned?: boolean
-    isSidebarMode?: boolean
     engine: Styletron
     onClose: () => void
     onToggleSidebar?: () => void
 }
 
-export default function TitleBar({
-    pinned = false,
-    isSidebarMode = false,
-    onClose,
-    onToggleSidebar,
-    engine,
-}: TitleBarProps) {
+export default function TitleBar({ pinned = false, onClose, onToggleSidebar, engine }: TitleBarProps) {
     const { theme, themeType } = useTheme()
     const { t } = useTranslation()
+    const isSidebarMode = useTranslatorStore((state) => state.isSidebarMode)
 
     const styles = useStyles({ theme, themeType })
     const [isPinned, setIsPinned] = useState(pinned)

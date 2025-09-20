@@ -154,17 +154,6 @@ browser.runtime.onMessage.addListener(async (request) => {
             await browser.storage.local.set({ [optionsPageHeaderPromotionIDKey]: request.headerPromotionID })
             browser.runtime.openOptionsPage()
             return
-        case 'moveChatToSidebar':
-            // Get the current active tab
-            const [activeTab] = await browser.tabs.query({ active: true, currentWindow: true })
-            if (activeTab.id) {
-                // Close popup by sending message
-                browser.tabs.sendMessage(activeTab.id, {
-                    type: 'show-sidebar',
-                    sessionId: request.sessionId,
-                })
-            }
-            return
     }
 })
 

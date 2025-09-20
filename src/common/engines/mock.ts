@@ -45,7 +45,7 @@ export class Mock extends AbstractEngine {
             'Nice catch—coalesce nulls to avoid `undefined` leaks in JSON.',
         ]
 
-        const randomResponse = responses[Math.floor(Math.random() * responses.length)]
+        const randomResponse = 'Mock response: ' + responses[Math.floor(Math.random() * responses.length)]
         const words = randomResponse.split(' ')
 
         // TODO: Simulate streaming response by sending words gradually

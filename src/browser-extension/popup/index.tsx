@@ -22,6 +22,7 @@ function App() {
                 position: 'relative',
                 height: '100%',
                 background: theme.colors.backgroundPrimary,
+                // if this is a sidebar, height will be constrained by parent
             }}
             data-testid='popup-container'
         >

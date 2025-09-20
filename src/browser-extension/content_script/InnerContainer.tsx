@@ -13,6 +13,7 @@ import {
     zIndex,
 } from './consts'
 import { createUseStyles } from 'react-jss'
+import { useTranslatorStore } from '@/common/store'
 
 type Props = {
     reference: ReferenceElement
@@ -35,19 +36,32 @@ const useStyles = createUseStyles({
         width: 'max-content',
     },
     sidebarContainer: {
-        position: 'fixed !important',
-        top: '0 !important',
-        right: '0 !important',
-        width: '360px !important',
-        height: '100vh !important',
-        maxWidth: 'none !important',
-        borderRadius: '0 !important',
-        boxShadow: '0 0 20px rgba(0,0,0,0.3) !important',
+        'position': 'fixed !important',
+        'top': '0 !important',
+        'right': '0 !important',
+        'width': '400px !important',
+        'height': '100vh !important',
+        'maxWidth': 'none !important',
+        'minWidth': '400px !important',
+        'borderRadius': '0 !important',
+        'boxShadow': '-4px 0 20px rgba(0,0,0,0.15) !important',
+        'display': 'flex !important',
+        'flexDirection': 'column !important',
+        'overflow': 'hidden !important',
+        'transform': 'none !important',
+        'left': 'auto !important',
+        '& .translator-container': {
+            flex: '1 1 auto',
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+        },
     },
 })
 
 export default function InnerContainer({ children, reference, disablePositioning = false }: Props) {
     const styles = useStyles()
+    const isSidebarMode = useTranslatorStore((state) => state.isSidebarMode)
 
     const draggedRef = useRef(false)
     const draggableRef = useRef<HTMLDivElement | null>(null)
@@ -57,6 +71,21 @@ export default function InnerContainer({ children, reference, disablePositioning
         if (!draggableRef.current || disablePositioning) {
             return
         }
+
+        if (isSidebarMode) {
+            // Force sidebar position and height constraints
+            Object.assign(draggableRef.current.style, {
+                left: 'auto',
+                right: '0px',
+                top: '0px',
+                transform: 'none',
+                maxHeight: '100vh',
+                height: '100vh',
+                overflow: 'hidden',
+            })
+            return
+        }
+
         const { x, y } = await computePosition(reference, draggableRef.current, {
             placement: 'bottom',
             middleware: [
@@ -65,11 +94,20 @@ export default function InnerContainer({ children, reference, disablePositioning
                 flip(),
                 size({
                     apply({ availableHeight, elements }) {
-                        Object.assign(elements.floating.style, {
-                            maxHeight: `${Math.max(popupCardMinHeightAfterTranslation, availableHeight)}px`,
-                            // Allow internal scrolling when content exceeds maxHeight
-                            overflow: 'auto',
-                        })
+                        if (!isSidebarMode) {
+                            Object.assign(elements.floating.style, {
+                                maxHeight: `${Math.max(popupCardMinHeightAfterTranslation, availableHeight)}px`,
+                                // Allow internal scrolling when content exceeds maxHeight
+                                overflow: 'auto',
+                            })
+                        } else {
+                            // TODO: this doesn't get called when changing to sidebar mode, so maxHeight isn't applied
+                            Object.assign(elements.floating.style, {
+                                maxHeight: `100vh`,
+                                height: `100vh`,
+                                overflow: 'hidden',
+                            })
+                        }
                     },
                 }),
             ],
@@ -80,7 +118,7 @@ export default function InnerContainer({ children, reference, disablePositioning
             left: `${Math.max(documentPadding, x)}px`,
             top: `${Math.max(documentPadding, y)}px`,
         })
-    }, [reference, disablePositioning])
+    }, [reference, disablePositioning, isSidebarMode])
 
     function handleOnDrag(event: DraggableEvent, data: DraggableData) {
         draggedRef.current = true
@@ -92,8 +130,8 @@ export default function InnerContainer({ children, reference, disablePositioning
             return
         }
         const resizeObserver = new ResizeObserver(() => {
-            if (draggedRef.current) {
-                // do nothing if has been dragged
+            if (draggedRef.current && !isSidebarMode) {
+                // do nothing if has been dragged, unless we're switching to sidebar mode
             } else {
                 updatePosition()
             }
@@ -102,20 +140,25 @@ export default function InnerContainer({ children, reference, disablePositioning
         return () => {
             resizeObserver.disconnect()
         }
-    }, [reference, updatePosition])
+    }, [reference, updatePosition, isSidebarMode])
+
+    // Trigger position update when sidebar mode changes
+    useEffect(() => {
+        updatePosition()
+    }, [isSidebarMode, updatePosition])
 
     return (
         <Draggable
             nodeRef={draggableRef}
-            handle={disablePositioning ? undefined : dragRegionSelector}
+            handle={disablePositioning || isSidebarMode ? undefined : dragRegionSelector}
             bounds='html'
             position={position}
             onDrag={handleOnDrag}
-            disabled={disablePositioning}
+            disabled={disablePositioning || isSidebarMode}
         >
             <div
                 ref={draggableRef}
-                className={`${styles.container} ${disablePositioning ? styles.sidebarContainer : ''}`}
+                className={`${styles.container} ${isSidebarMode ? styles.sidebarContainer : ''}`}
                 id={popupCardInnerContainerId}
             >
                 {children}

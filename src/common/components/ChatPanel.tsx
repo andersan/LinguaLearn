@@ -10,7 +10,7 @@ import { Textarea } from 'baseui-sd/textarea'
 import { useTheme } from '../hooks/useTheme'
 import { createUseStyles } from 'react-jss'
 import { Theme } from 'baseui-sd/theme'
-import { isBrowserExtensionPopup, getBrowser } from '../utils'
+import { useTranslatorStore } from '../store'
 
 interface ChatPanelProps {
     sessionId?: string
@@ -23,19 +23,22 @@ interface IChatPanelStyleProps {
     themeType: BaseThemeType
     settings?: { fontSize: number; enableBackgroundBlur: boolean; themeType?: string } | null
     isStreaming: boolean
+    isSidebarMode?: boolean
 }
 
 const useStyles = createUseStyles({
-    root: {
+    root: (props: IChatPanelStyleProps) => ({
         display: 'flex',
         flexDirection: 'column',
         padding: 8,
         boxSizing: 'border-box',
         width: '100%',
         minHeight: 260,
-        maxHeight: 'min(60vh, 520px)',
+        maxHeight: props.isSidebarMode ? 'none' : 'min(60vh, 520px)',
+        height: props.isSidebarMode ? '100%' : 'auto',
         overflow: 'hidden',
-    },
+        flex: props.isSidebarMode ? '1 1 auto' : 'none',
+    }),
     messagesWrapper: (p: IChatPanelStyleProps) => ({
         flex: 1,
         order: 0,
@@ -147,6 +150,7 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ sessionId, onSessionCreate
     const assistantContentRef = useRef('')
     const abortRef = useRef<AbortController | null>(null)
     const { theme } = useTheme()
+    const isSidebarMode = useTranslatorStore((state) => state.isSidebarMode)
 
     // auto scroll to bottom when messages change
     const scrollRef = useRef<HTMLDivElement | null>(null)
@@ -202,37 +206,12 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ sessionId, onSessionCreate
         }
     }, [input, sessionId, onSessionCreate, settings])
 
-    const handleMoveToSidebar = useCallback(async () => {
-        if (!sessionId) return
-
-        try {
-            const browser = await getBrowser()
-            await browser.runtime.sendMessage({
-                type: 'moveChatToSidebar',
-                sessionId: sessionId,
-            })
-            // Close the popup
-            window.close()
-        } catch (error) {
-            console.error('Failed to move chat to sidebar:', error)
-        }
-    }, [sessionId])
-
-    const isInPopup = isBrowserExtensionPopup()
-
-    // Debug logging to see what's happening
-    console.log('ChatPanel debug:', {
-        isInPopup,
-        sessionId,
-        windowLocation: typeof window !== 'undefined' ? window.location.href : 'undefined',
-        pathname: typeof window !== 'undefined' ? window.location.pathname : 'undefined',
-    })
-
     const styles = useStyles({
         theme,
         themeType: settings?.themeType === 'dark' ? 'dark' : 'light',
         settings,
         isStreaming,
+        isSidebarMode,
     })
 
     return (
@@ -310,15 +289,6 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ sessionId, onSessionCreate
                     <div className={styles.inputHintBar}>
                         <div className={styles.inputHintText}>Press Enter to send, Shift+Enter for newline.</div>
                         <div className={styles.controls}>
-                            {isInPopup && sessionId && (
-                                <button
-                                    onClick={handleMoveToSidebar}
-                                    className={styles.button}
-                                    title='rchat to sidebar'
-                                >
-                                    📌
-                                </button>
-                            )}
                             {isStreaming && (
                                 <button
                                     onClick={() => {

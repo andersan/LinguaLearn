@@ -123,6 +123,14 @@ const useStyles = createUseStyles({
         display: 'flex',
         flexDirection: 'column',
     },
+    'popupCardSidebar': {
+        minHeight: '80vh',
+        maxHeight: '95vh',
+        boxSizing: 'border-box',
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'relative',
+    },
     'footer': (props: IThemedStyleProps) => ({
         boxSizing: 'border-box',
         color: props.theme.colors.contentSecondary,
@@ -135,6 +143,22 @@ const useStyles = createUseStyles({
         alignItems: 'center',
         gap: '10px',
         backdropFilter: 'blur(10px)',
+    }),
+    'footerSidebar': (props: IThemedStyleProps) => ({
+        boxSizing: 'border-box',
+        color: props.theme.colors.contentSecondary,
+        width: '100%',
+        height: '42px',
+        paddingLeft: '6px',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px',
+        backdropFilter: 'blur(10px)',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        borderTop: `1px solid ${props.theme.colors.borderTransparent}`,
     }),
     'poweredBy': (props: IThemedStyleProps) => ({
         fontSize: props.theme.sizing.scale300,
@@ -179,7 +203,14 @@ const useStyles = createUseStyles({
                   'alignItems': 'center',
                   'padding': '8px 16px',
                   'borderBottom': `1px solid ${props.theme.colors.borderTransparent}`,
-                  'minWidth': '612px',
+                  'minWidth': '400px',
+                  'flexWrap': 'wrap',
+                  'gap': '8px',
+                  '@media (max-width: 500px)': {
+                      flexWrap: 'wrap',
+                      minWidth: 0,
+                      gap: '8px',
+                  },
                   '-ms-user-select': 'none',
                   '-webkit-user-select': 'none',
                   'user-select': 'none',
@@ -253,6 +284,23 @@ const useStyles = createUseStyles({
         // Remove scrolling here; chat panel will manage its own scroll
         overflow: 'visible',
     }),
+    'popupCardContentContainerSidebar': (props: IThemedStyleProps) => ({
+        paddingTop: props.isDesktopApp ? '52px' : undefined,
+        paddingBottom: '42px', // Reserve space for absolute footer
+        display: 'flex',
+        flexDirection: 'column',
+        flex: 1,
+        minHeight: 0,
+        // Allow scrolling when content exceeds available space in sidebar mode
+        overflow: 'auto',
+    }),
+    'translatorContainer': {
+        flex: '1 1 auto',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+        minHeight: 0,
+    },
     'loadingContainer': {
         margin: '0 auto',
         display: 'flex',
@@ -507,6 +555,7 @@ export function Translator(props: ITranslatorProps) {
 
 function InnerTranslator(props: IInnerTranslatorProps) {
     const [showSettings, setShowSettings] = useAtom(showSettingsAtom)
+    const isSidebarMode = useTranslatorStore((state) => state.isSidebarMode)
 
     useEffect(() => {
         setShowSettings(props.showSettings ?? false)
@@ -1620,7 +1669,7 @@ function InnerTranslator(props: IInnerTranslatorProps) {
 
     return (
         <div
-            className={clsx(styles.popupCard, {
+            className={clsx(isSidebarMode ? styles.popupCardSidebar : styles.popupCard, {
                 'yetone-dark': themeType === 'dark',
             })}
             ref={containerRef}
@@ -1878,7 +1927,8 @@ function InnerTranslator(props: IInnerTranslatorProps) {
                     </div>
                     <div
                         className={clsx(
-                            styles.popupCardContentContainer,
+                            isSidebarMode ? styles.popupCardContentContainerSidebar : styles.popupCardContentContainer,
+                            isSidebarMode && styles.translatorContainer,
                             settings.enableBackgroundBlur && styles.popupCardContentContainerBackgroundBlur
                         )}
                     >
@@ -2492,9 +2542,24 @@ function InnerTranslator(props: IInnerTranslatorProps) {
                     </div>
                 </div>
             </div>
+            {showChat && (
+                <div
+                    style={{
+                        marginTop: 16,
+                        ...(isSidebarMode && {
+                            flex: '1 1 auto',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            minHeight: 0,
+                        }),
+                    }}
+                >
+                    <ChatPanel sessionId={chatSessionId} onSessionCreate={(id) => setChatSessionId(id)} />
+                </div>
+            )}
             {props.showSettingsIcon && (
                 <div
-                    className={styles.footer}
+                    className={isSidebarMode ? styles.footerSidebar : styles.footer}
                     style={{
                         boxShadow: isScrolledToBottom ? undefined : theme.lighting.shadow700,
                         backgroundColor: getFooterBackgroundColor(),
@@ -2515,12 +2580,18 @@ function InnerTranslator(props: IInnerTranslatorProps) {
                                 e.stopPropagation()
                                 e.preventDefault()
                                 if (isBrowserExtensionContentScript()) {
-                                    const browser = (await import('webextension-polyfill')).default
-                                    await browser.runtime.sendMessage({
-                                        type: 'openOptionsPage',
-                                        openaiAPIKeyPromotionID: openaiAPIKeyPromotion?.id,
-                                        headerPromotionID: settingsHeaderPromotion?.id,
-                                    })
+                                    try {
+                                        const browser = (await import('webextension-polyfill')).default
+                                        await browser.runtime.sendMessage({
+                                            type: 'openOptionsPage',
+                                            openaiAPIKeyPromotionID: openaiAPIKeyPromotion?.id,
+                                            headerPromotionID: settingsHeaderPromotion?.id,
+                                        })
+                                    } catch (error) {
+                                        console.debug('Failed to open options page:', error)
+                                        // Fallback: try to open settings in the current context
+                                        setShowSettings((s: boolean) => !s)
+                                    }
                                 } else {
                                     setShowSettings((s: boolean) => !s)
                                 }
@@ -2640,11 +2711,6 @@ function InnerTranslator(props: IInnerTranslatorProps) {
                 </ModalBody>
             </Modal>
             <Toaster />
-            {showChat && (
-                <div style={{ marginTop: 16 }}>
-                    <ChatPanel sessionId={chatSessionId} onSessionCreate={(id) => setChatSessionId(id)} />
-                </div>
-            )}
         </div>
     )
 }

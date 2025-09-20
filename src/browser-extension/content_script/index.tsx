@@ -18,18 +18,15 @@ import { GlobalSuspense } from '@/common/components/GlobalSuspense'
 import { type ReferenceElement } from '@floating-ui/dom'
 import InnerContainer from './InnerContainer'
 import TitleBar from './TitleBar'
-import { setExternalOriginalText } from '@/common/store'
+import { setExternalOriginalText, toggleSidebarMode as toggleSidebarModeStore } from '@/common/store'
 
 let root: Root | null = null
 const generateId = createGenerateId()
 const hidePopupThumbTimer: number | null = null
-let isSidebarMode = false
 
-async function toggleSidebarMode() {
-    isSidebarMode = !isSidebarMode
-
-    // Re-render with updated sidebar state
-    await showPopupCard({ getBoundingClientRect: () => new DOMRect(0, 0, 0, 0) }, '', false)
+function toggleSidebarMode() {
+    // Just update the store state - React components will re-render automatically
+    toggleSidebarModeStore()
 }
 
 async function popupThumbClickHandler(event: UserEventType) {
@@ -123,10 +120,9 @@ async function showPopupCard(reference: ReferenceElement, text: string, autoFocu
         <React.StrictMode>
             <GlobalSuspense>
                 <JSS jss={jss} generateId={generateId} classNamePrefix='__yetone-lingualearn-jss-'>
-                    <InnerContainer reference={reference} disablePositioning={isSidebarMode}>
+                    <InnerContainer reference={reference} disablePositioning={false}>
                         <TitleBar
                             pinned={settings.pinned}
-                            isSidebarMode={isSidebarMode}
                             onClose={hidePopupCard}
                             onToggleSidebar={toggleSidebarMode}
                             engine={engine}
@@ -245,9 +241,17 @@ async function main() {
 
     const mouseDownHandler = async (event: UserEventType) => {
         mousedownTarget = event.target
-        const settings = await utils.getSettings()
-        hidePopupThumb()
-        if (!settings.pinned) {
+        try {
+            const settings = await utils.getSettings()
+            hidePopupThumb()
+            if (!settings.pinned) {
+                hidePopupCard()
+            }
+        } catch (error) {
+            // Extension context invalidated - likely due to extension reload
+            // Gracefully handle by just hiding the popup components
+            console.debug('Extension context invalidated, hiding popup components')
+            hidePopupThumb()
             hidePopupCard()
         }
     }
