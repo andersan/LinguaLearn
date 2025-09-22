@@ -11,7 +11,7 @@
 
 <p align="center">
   <a href="LICENSE" target="_blank">
-    <img alt="MIT License" src="https://img.shields.io/github/license/yetone/lingualearn.svg?style=flat-square" />
+    <img alt="MIT License" src="https://img.shields.io/github/license/yetone/openai-translator.svg?style=flat-square" />
   </a>
 
   <!-- TypeScript Badge -->
@@ -171,10 +171,10 @@ const API_URL_PATH = `/openai/deployments/${deployName}/chat/completions?api-ver
 # Star 历史
 
 <p align="center">
-  <a target="_blank" href="https://star-history.com/#yetone/lingualearn&Date">
+  <a target="_blank" href="https://star-history.com/#yetone/openai-translator&Date">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=yetone/lingualearn&type=Date&theme=dark">
-      <img alt="NebulaGraph Data Intelligence Suite(ngdi)" src="https://api.star-history.com/svg?repos=yetone/lingualearn&type=Date">
+      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=yetone/openai-translator&type=Date&theme=dark">
+      <img alt="NebulaGraph Data Intelligence Suite(ngdi)" src="https://api.star-history.com/svg?repos=yetone/openai-translator&type=Date">
     </picture>
   </a>
 </p>

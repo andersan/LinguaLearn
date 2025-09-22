@@ -7,9 +7,11 @@ import { Client as Styletron } from 'styletron-engine-atomic'
 import { IThemedStyleProps } from '../../common/types'
 import { useTheme } from '../../common/hooks/useTheme'
 import { RxCross2, RxDrawingPin, RxDrawingPinFilled } from 'react-icons/rx'
+import { VscSplitHorizontal, VscLayoutSidebarLeft } from 'react-icons/vsc'
 import LogoWithText from '../../common/components/LogoWithText'
 import { setSettings } from '../../common/utils'
 import { Tooltip } from '../../common/components/Tooltip'
+import { useTranslatorStore } from '@/common/store'
 
 const useStyles = createUseStyles({
     container: ({ theme }: IThemedStyleProps) => ({
@@ -38,11 +40,13 @@ type TitleBarProps = {
     pinned?: boolean
     engine: Styletron
     onClose: () => void
+    onToggleSidebar?: () => void
 }
 
-export default function TitleBar({ pinned = false, onClose, engine }: TitleBarProps) {
+export default function TitleBar({ pinned = false, onClose, onToggleSidebar, engine }: TitleBarProps) {
     const { theme, themeType } = useTheme()
     const { t } = useTranslation()
+    const isSidebarMode = useTranslatorStore((state) => state.isSidebarMode)
 
     const styles = useStyles({ theme, themeType })
     const [isPinned, setIsPinned] = useState(pinned)
@@ -73,6 +77,25 @@ export default function TitleBar({ pinned = false, onClose, engine }: TitleBarPr
                                 )}
                             </div>
                         </Tooltip>
+                        {onToggleSidebar && (
+                            <Tooltip
+                                content={isSidebarMode ? t('Exit sidebar mode') : t('Sidebar mode')}
+                                placement='bottom'
+                                onMouseEnterDelay={1000}
+                            >
+                                <div
+                                    className={styles.actionIconContainer}
+                                    onClick={onToggleSidebar}
+                                    data-testid='titlebar-sidebar-btn'
+                                >
+                                    {isSidebarMode ? (
+                                        <VscSplitHorizontal size={13} />
+                                    ) : (
+                                        <VscLayoutSidebarLeft size={13} />
+                                    )}
+                                </div>
+                            </Tooltip>
+                        )}
                         <Tooltip content={t('Close')} placement='bottom' onMouseEnterDelay={1000}>
                             <div
                                 className={styles.actionIconContainer}

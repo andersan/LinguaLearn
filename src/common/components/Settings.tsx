@@ -1339,6 +1339,7 @@ function ProviderSelector({ value, onChange, hasPromotion }: IProviderSelectorPr
               { label: 'Moonshot', id: 'Moonshot' },
               { label: 'Groq', id: 'Groq' },
               { label: 'DeepSeek', id: 'DeepSeek' },
+              { label: 'Mock', id: 'Mock' },
           ] as {
               label: string
               id: Provider
@@ -1356,6 +1357,7 @@ function ProviderSelector({ value, onChange, hasPromotion }: IProviderSelectorPr
               { label: 'Moonshot', id: 'Moonshot' },
               { label: 'Groq', id: 'Groq' },
               { label: 'DeepSeek', id: 'DeepSeek' },
+              { label: 'Mock', id: 'Mock' },
           ] as {
               label: string
               id: Provider
